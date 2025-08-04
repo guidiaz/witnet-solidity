@@ -95,15 +95,15 @@ async function main () {
   const router = {
     ...(WrappedWIT.isNetworkSupported(ethRpcNetwork)
       ? {
-        address: {
-          hint: `Show Wrapped/WIT contract address on ${helpers.colors.mcyan(ethRpcNetwork.toUpperCase())}.`,
-        },
-        balance: {
-          hint: `Show native and Wrapped/WIT balances for all available signing addresses on ${helpers.colors.mcyan(ethRpcNetwork.toUpperCase())}.`,
+        accounts: {
+          hint: `Show EVM native and Wrapped/WIT balances for all available signing accounts on ${helpers.colors.mcyan(ethRpcNetwork.toUpperCase())}.`,
           options: [
             "port",
           ],
           envars: [],
+        },
+        contract: {
+          hint: `Show Wrapped/WIT contract address on ${helpers.colors.mcyan(ethRpcNetwork.toUpperCase())}.`,
         },
         supplies: {
           hint: `Show relevant token-related supplies on ${helpers.colors.mcyan(ethRpcNetwork.toUpperCase())}.`,
@@ -206,8 +206,8 @@ async function main () {
       ],
     },
     commands: {
-      address,
-      balance,
+      accounts: balance,
+      contract: address,
       gateway,
       networks,
       supplies,
@@ -240,7 +240,7 @@ async function main () {
       }
     }
   } else {
-    showMainUsage(router, ["ETHRPC_PRIVATE_KEYS"])
+    showMainUsage(router, ["ETHRPC_PRIVATE_KEYS", "WITNET_SDK_WALLET_MASTER_KEY"])
     if (!args[0] && ethRpcError) {
       console.info(helpers.colors.mred(`\nNo ETH/RPC gateway running on port ${ethRpcPort}.`))
     }
